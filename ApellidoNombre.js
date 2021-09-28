@@ -55,4 +55,3 @@ console.log(user.countMascotas());
 console.log(user.getFullName());
 // console.log(user);
 console.log(user.getBookNames());
-/// lalalalalala
