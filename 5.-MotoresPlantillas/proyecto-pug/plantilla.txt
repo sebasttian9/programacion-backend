@@ -1,0 +1,1 @@
+<ul><li id="nombre">{{nombre}}</li><li id="apellido">{{apellido}}</li><li id="edad">{{edad}}</li><li id="email">{{email}}</li><li id="telefono">{{teléfono}}</li></ul>

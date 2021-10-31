@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Luciana2",
+    "price": "3000",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Destructive_Magic-256.png",
+    "id": 3
+  },
+  {
+    "title": "Luciana",
+    "price": "3000",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Knight-256.png",
+    "id": 4
+  },
+  {
+    "title": "pvz",
+    "price": "15000",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Poison_Spider-256.png",
+    "id": 6
+  },
+  {
+    "title": "patricio estrella",
+    "price": "34500",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Sorceress-256.png",
+    "id": 7
+  },
+  {
+    "title": "vikingo",
+    "price": "1450",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-256.png",
+    "id": 8
+  },
+  {
+    "title": "Hombre lobo",
+    "price": "10900",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Werewolf-256.png",
+    "id": 9
+  },
+  {
+    "title": "espada",
+    "price": "8900",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Sword-256.png",
+    "id": 10
+  }
+]

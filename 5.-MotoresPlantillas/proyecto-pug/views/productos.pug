@@ -1,0 +1,25 @@
+extends index
+block vista
+        main
+            div(style='width: 80%;margin: auto;')
+                h2=titulo
+                -if(productos.length>0){
+                .table-responsive
+                table.table.table-dark                
+                    thead
+                    tr
+                        th(scope='col') Nombre
+                        th(scope='col') precio
+                        th(scope='col') img
+                    tbody
+                    -productos.forEach(p=>{
+                    tr
+                        td=p.title
+                        td=p.price
+                        td
+                            img(src=`${p.thumbnail}` width='50px')
+                    -})
+                -}else{
+                .alert.alert-danger(role='alert') NO SE ENCONTRARON DATOS
+                -}
+                a.btn.btn-primary(href='/' role='button') Ir a formulario

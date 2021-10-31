@@ -1,0 +1,2 @@
+A mi gusto, por temas de familiaridad con el codigo, me quedo con ejs. Aunque de todas maneras handlebars tampoco es tan distinto.
+El mas complejo seria pug por sintaxis. 

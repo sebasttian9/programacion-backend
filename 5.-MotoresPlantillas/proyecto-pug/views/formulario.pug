@@ -1,0 +1,19 @@
+extends index
+
+block formulario
+        main
+            div(style='width: 80%;margin: auto;')
+                h2.mb-4=titulo
+                form(method='post' action='/productos')
+                    .form-group
+                    label(for='Nombre') Titulo
+                    input#Nombre.form-control(type='text' aria-describedby='Nombre' name='title')
+                    // <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    .form-group
+                    label(for='Precio') Precio
+                    input#Precio.form-control(type='text' name='price')
+                    .form-group
+                    label(for='thum') Url
+                    input#thum.form-control(type='text' name='thum')
+                    button.btn.btn-success.mt-3(type='submit') Enviar
+                    a.btn.btn-primary.mt-3.ml-1(href='/productos' role='button') Ir a productos
