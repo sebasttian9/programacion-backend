@@ -18,6 +18,24 @@ class ContenedorMongoDb {
 
                 let result =  await cole.find({});
                 console.log(result);
+                return result;
+        }
+
+        async save(objeto){
+
+                let result = await this.coleccion.create(objeto);
+
+                return result;
+        }
+
+
+        async getById(id){
+
+
+                let result = await this.coleccion.find({"_id": id});
+
+                return result;
+
         }
 
 }

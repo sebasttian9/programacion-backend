@@ -14,7 +14,9 @@ productosRouter.get('/:id?',(req,res)=>{
 
     if(admin){
 
-    const id = parseInt(req.params.id);
+    // const id = parseInt(req.params.id);
+    const id = req.params.id;
+
     console.log('id por parametro'+id);
     if(id){
 
@@ -58,9 +60,11 @@ productosRouter.post('',(req,res)=>{
 
             const objeto = {
                                 title : req.body.title,
-                                price: req.body.precio,
-                                thumbnail: req.body.thumb
+                                precio: req.body.precio,
+                                thumb: req.body.thumb
                         }
+
+                        console.log(req.body);
 
                         productosDao.save(objeto).then(resp=>{
 
@@ -68,7 +72,8 @@ productosRouter.post('',(req,res)=>{
 
             }).catch(error =>{
                 res.json({error : 'Error al guardar producto'+error});
-                next(err);
+                // next(err);
+                console.log(error);
             });
 
         }else{

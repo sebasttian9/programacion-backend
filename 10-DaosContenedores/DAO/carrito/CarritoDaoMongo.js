@@ -1,13 +1,13 @@
 import ContenedorMongoDb from "../../contenedores/contenedorMongo.js"
+import mongoose from "mongoose";
 
 class CarritoDaoMongo extends ContenedorMongoDb {
 
 
         constructor(){
             super('carritos', {
-                title: { type: String, required: true },
-                precio: { type: Number, required: true },
-                thumb: { type: String, required: true },
+                timestamp: { type: String, required: true },
+                productos: [{ id_producto: { type: mongoose.Schema.Types.ObjectId, ref: 'productos' }, cantidad: Number }]
             });
         }
 

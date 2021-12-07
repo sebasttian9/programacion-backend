@@ -1,5 +1,5 @@
 // elegir tu persistencia acá
-const PERS = 'mongodb'
+const PERS = 'firebase'
 
 export default {
     PERS,
@@ -17,5 +17,7 @@ export default {
         }
     },
     firebase: {
+        pathfire: './db/basefirebase-1268b-firebase-adminsdk-m8t9d-d60b5496d7.json',
+
     }
 }

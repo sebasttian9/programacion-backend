@@ -8,8 +8,8 @@ switch (config.PERS) {
         carritoDao = new CarritoDaoArchivo(config.fileSystem.path)
         break
     case 'firebase':
-        const { default: PersonasDaoFirebase } = await import('./ProductosDaoFirebase.js')
-        productosDao = new PersonasDaoFirebase()
+        const { default: PersonasDaoFirebase } = await import('./CarritoDaoFirebase.js')
+        carritoDao = new PersonasDaoFirebase()
         break
     case 'mongodb':
         const { default: CarritoDaoMongo } = await import('./CarritoDaoMongo.js')
@@ -17,7 +17,7 @@ switch (config.PERS) {
         break
     default:
         const { default: PersonasDaoMem } = await import('./PersonasDaoMem.js')
-        productosDao = new PersonasDaoMem()
+        carritoDao = new PersonasDaoMem()
         break
 }
 
