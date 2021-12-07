@@ -1,9 +1,10 @@
 
 import { Router } from "express";
-import CarritoDaoArchivo from "../DAO/carrito/CarritoDaoArchivo.js";
+// import CarritoDaoArchivo from "../DAO/carrito/CarritoDaoArchivo.js";
+import { carritoDao } from "../DAO/carrito/index.js";
 
 const routerCarrito = Router();
-const carroDaoArchivo = new CarritoDaoArchivo();
+// const carroDaoArchivo = new CarritoDaoArchivo();
 
 /// RUTAS CARRITO ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -11,7 +12,7 @@ routerCarrito.get('/:id/productos',(req,res)=>{
 
     const id = req.params.id;
     // const { operacion } = req.params;
-    carroDaoArchivo.getAll(id).then(resp =>{
+    carritoDao.getAll(id).then(resp =>{
         // res.json(JSON.stringify(resp));
         if(resp){
             res.json(resp);
@@ -21,6 +22,7 @@ routerCarrito.get('/:id/productos',(req,res)=>{
         
     }).catch(error =>{
         res.json({error : 'Error al pedir productos del carrito '+id});
+        console.log(error);
     })
 
     
@@ -31,7 +33,7 @@ routerCarrito.post('/:id/productos/:id_prod',(req,res)=>{
 const id = req.params.id;
 const id_prod = req.params.id_prod;
 // const { operacion } = req.params;
-carroDaoArchivo.saveProd(id,id_prod).then(resp =>{
+carritoDao.saveProd(id,id_prod).then(resp =>{
     // res.json(JSON.stringify(resp));
     if(resp){
         res.json(resp);
@@ -54,7 +56,7 @@ const carrito = {
                     productos: []
                }
 
-    carroDaoArchivo.save(carrito).then(resp=>{
+               carritoDao.save(carrito).then(resp=>{
 
     res.json(resp);
 
@@ -70,7 +72,7 @@ routerCarrito.delete('/:id',(req,res)=>{
 
 const id = req.params.id;
 
-carroDaoArchivo.deleteById(id).then(resp =>{
+carritoDao.deleteById(id).then(resp =>{
 
     if(resp == 1){
         res.json({ respuesta : 'ok delete'});
@@ -88,7 +90,7 @@ routerCarrito.delete('/:id/productos/:id_prod',(req,res)=>{
 const id = req.params.id;
 const id_prod = req.params.id_prod;
 
-carroDaoArchivo.deleteByIdProdCarro(id,id_prod).then(resp =>{
+carritoDao.deleteByIdProdCarro(id,id_prod).then(resp =>{
 
     if(resp == 1){
         res.json({ respuesta : 'ok delete'});

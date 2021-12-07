@@ -3,8 +3,8 @@ import ContenedorArchivo from "../../contenedores/contenedorArchivo.js";
 
 class CarritoDaoArchivo extends ContenedorArchivo {
 
-    constructor(){
-        super('db/carrito.txt');
+    constructor(rutaDir){
+        super(`${rutaDir}/carrito.txt`);
     }
 
 

@@ -1,9 +1,14 @@
 {
   "type": "module",
-  "name": "expressavanzado",
+  "name": "10-daoscontenedores",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.14"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js"
@@ -17,9 +22,5 @@
   "bugs": {
     "url": "https://github.com/sebasttian9/programacion-backend/issues"
   },
-  "homepage": "https://github.com/sebasttian9/programacion-backend#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^6.0.14"
-  }
+  "homepage": "https://github.com/sebasttian9/programacion-backend#readme"
 }

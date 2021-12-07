@@ -1,5 +1,5 @@
 // elegir tu persistencia acá
-const PERS = 'json'
+const PERS = 'mongodb'
 
 export default {
     PERS,
@@ -7,11 +7,12 @@ export default {
         path: './db'
     },
     mongodb: {
-        cnxStr: 'srv+mongodb://xxxxxxxxxxxxxxxxxxx',
+        // cnxStr: 'srv+mongodb://xxxxxxxxxxxxxxxxxxx', 
+        cnxStr: 'mongodb://localhost:27017',
         options: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
+            // useCreateIndex: true,
             serverSelectionTimeoutMS: 5000,
         }
     },

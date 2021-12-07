@@ -1,6 +1,5 @@
 //importaar
 import express  from "express";
-import { isNull } from "util";
 import { routerCarrito } from "./routers/carritoRouter.js";
 import { productosRouter  } from "./routers/productosRouter.js";
 // import Contenedor from "./contenedores/contenedorArchivo.js";
@@ -14,7 +13,7 @@ import { productosRouter  } from "./routers/productosRouter.js";
 // inicializar 
 const app = express();
 // const contCarrito = new ContenedorCarrito('carrito.txt');
-const admin = true;
+
 
 // configurar 
 app.use(express.json());

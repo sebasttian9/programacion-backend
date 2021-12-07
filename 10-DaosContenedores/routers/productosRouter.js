@@ -1,10 +1,12 @@
 import { Router } from "express";
-import ProductosDaoArchivo from "../DAO/productos/ProductosDaoArchivo.js";
+// import ProductosDaoArchivo from "../DAO/productos/ProductosDaoArchivo.js";
+import {productosDao} from "../DAO/productos/index.js";
+import { isNull } from "util";
 
-const prodDaoArchivo = new ProductosDaoArchivo();
+// const prodDaoArchivo = new ProductosDaoArchivo();
 const productosRouter = Router();
 
-
+const admin = true;
 
 //// RUTAS PRODUCTOS
 
@@ -16,7 +18,7 @@ productosRouter.get('/:id?',(req,res)=>{
     console.log('id por parametro'+id);
     if(id){
 
-        prodDaoArchivo.getById(id).then(resp =>{
+        productosDao.getById(id).then(resp =>{
             // res.json(JSON.stringify(resp));
             if(isNull(resp)){
                 res.json({error: 'Producto no encontrado'});
@@ -31,12 +33,13 @@ productosRouter.get('/:id?',(req,res)=>{
     }else{
 
         // const { operacion } = req.params;
-        prodDaoArchivo.getAll().then(resp =>{
+        productosDao.getAll().then(resp =>{
             // res.json(JSON.stringify(resp));
             res.json(resp);
         }).catch(error =>{
             res.json({error : 'Error al pedir productos'});
-            next(err);
+            // next(err);
+            console.log(error);
         })
 
     }
@@ -59,7 +62,7 @@ productosRouter.post('',(req,res)=>{
                                 thumbnail: req.body.thumb
                         }
 
-                prodDaoArchivo.save(objeto).then(resp=>{
+                        productosDao.save(objeto).then(resp=>{
 
                 res.json(resp);
 
@@ -88,7 +91,7 @@ productosRouter.put('/:id',(req,res)=>{
                 id : id
         }
 
-        prodDaoArchivo.updateById(objeto).then(resp => {
+        productosDao.updateById(objeto).then(resp => {
 
                 if(resp==1){
                     res.json({ res : 'ok Update'});
@@ -117,7 +120,7 @@ productosRouter.delete('/:id',(req,res)=>{
         if(admin){
             const id = req.params.id;
 
-            prodDaoArchivo.deleteById(id).then(resp =>{
+            productosDao.deleteById(id).then(resp =>{
 
                 if(resp == 1){
                     res.json({ respuesta : 'ok delete'});
