@@ -7,6 +7,7 @@ const { Mensajes } = require('./contenedorMensajes');
 const { Productos } = require('./contenedorProductos');
 const { sqlite3:optionsLite } = require('./conexion/sqlite3');
 const { mysql:options } = require('./conexion/mysql');
+const { generarProductos } = require('./faker/productos');
 
 
 // Inicializar
@@ -111,3 +112,9 @@ io.on('connection', async socket => {
 
 httpServer.listen(8081, ()=> console.log('SERVER ON'))
 httpServer.on('error', (error)=>{})
+
+const default_cant_productos = 5;
+app.get('/api/productos-test', (req, res)=>{
+
+    res.json(generarProductos(default_cant_productos));
+})
