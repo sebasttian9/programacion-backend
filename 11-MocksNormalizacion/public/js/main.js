@@ -56,10 +56,15 @@ btn.addEventListener('click', e => {
 
     // prevengo que el formulario recargue la pagina al hacer submit
     // e.preventDefault()
-console.log('envia msj')
+    console.log('envia msj')
     // armo la persona extrayendo los datos de los campos del formulario
 
     const email = document.getElementById('email').value
+    const nombre = document.getElementById('nombre').value
+    const apellido = document.getElementById('apellido').value
+    const edad = document.getElementById('edad').value
+    const alias = document.getElementById('alias').value
+    const avatar = document.getElementById('avatar').value
     const texto = document.getElementById('txtMensaje').value
 
     if(email==''){
@@ -69,9 +74,16 @@ console.log('envia msj')
     }
 
     const cuerpo = {
-        email: email, // document.getElementById('txtNombre').value
-        fecha: new Date().toLocaleString(),
-        mensaje :  texto,// document.getElementById('txtApellido').value
+        autor: {
+        id: email, // document.getElementById('txtNombre').value
+        nombre: nombre,
+        apellido: apellido,
+        edad: edad,
+        alias: alias, 
+        avatar:avatar,
+        fecha: new Date().toLocaleString()
+        },
+        text: texto
     }
 
     // envio la persona al servidor via socket
@@ -84,10 +96,10 @@ console.log('envia msj')
 
 
 socket.on('chat', mensajes =>{
-    console.log(mensajes)
+    console.log('console log, desde main',mensajes)
     if(mensajes.length>0){
         const mensajesHTML = mensajes
-        .map(msj => `<span class='email'> ${msj.email} </span> <span class='fyh'> [${msj.fecha}] </span>  <span class='msj'>${msj.mensaje}</span>`)
+        .map(msj => `<span class='email'> ${msj.autor.id} </span> <span class='fyh'> [${msj.autor.fecha}] </span>  <span class='msj'>${msj.text}</span> <img src='${msj.autor.avatar}' width='40px'>`)
         .join('<br>')
         document.getElementById('mensajes').innerHTML = mensajesHTML;
     }else{
