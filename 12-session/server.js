@@ -11,6 +11,8 @@ const { mysql:options } = require('./conexion/mysql');
 const { generarProductos } = require('./faker/productos');
 const { normalize, denormalize, schema } = require("normalizr");
 const util = require('util')
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 function print(objeto) {
   console.log(util.inspect(objeto, false, 12, true))
@@ -34,6 +36,12 @@ const contenedorMensajes = new Contenedor('mensajes2.txt');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
+app.use(cookieParser('casaplaya'));
+app.use(session({
+    secret: 'secreto',
+    resave: true,
+    saveUninitialized : true
+}));
 
 
 // const productos = []
@@ -49,36 +57,28 @@ io.on('connection', async socket => {
 
     // Carga inicial de mensajes
     contenedorMensajes.getAll().then((row)=>{
-        console.log(row);
+        // console.log(row);
 
 
         // Inicio proceso de normalizacion
-        const mensajes = { id: 'mensajes1', mensajes: row};
+        // const mensajes = { id: 'mensajes1', mensajes: row};
         // const mensajes = row;
 
-        const autorSchema = new schema.Entity('autor', {}, { idAttribute: "id" });
-
-        const message = new schema.Entity("message", {
-            autor: autorSchema
-        }, { idAttribute: "_id" });
-
-
-
-
+        // const autorSchema = new schema.Entity('autor');
         // const textSchema = new schema.Entity('text');
         // Definimos un esquema de mensaje
-        const mensajesSchema = new schema.Entity('chat',{
-            mensajes : [message]
-        });
+        // const mensajeSchema = new schema.Entity('mensajes',{
+            // autor: autorSchema
+        // });
 
-        console.log(' ------------- OBJETO NORMALIZADO --------------- ')
-        const normalizedHolding = normalize(mensajes, mensajesSchema);
-        print(normalizedHolding)
+        // console.log(' ------------- OBJETO NORMALIZADO --------------- ')
+        // const normalizedHolding = normalize(mensajes, mensajeSchema);
+        // print(normalizedHolding)
 
 
-        console.log(' ------------- OBJETO DESNORMALIZADO --------------- ')
-        const denormalizedHolding = denormalize(normalizedHolding.result, mensajesSchema, normalizedHolding.entities);
-        print(denormalizedHolding)        
+        // console.log(' ------------- OBJETO DESNORMALIZADO --------------- ')
+        // const denormalizedHolding = denormalize(normalizedHolding.result, mensajeSchema, normalizedHolding.entities);
+        // print(denormalizedHolding)        
 
         // mensajes  = row;
         socket.emit('chat', row);
@@ -150,4 +150,62 @@ const default_cant_productos = 5;
 app.get('/api/productos-test', (req, res)=>{
 
     res.json(generarProductos(default_cant_productos));
+})
+
+// setear cookie sin tiempo
+app.get('/set', (req, res)=>{
+    res.cookie('server','express').send('cookie set');
+})
+
+// setear cookie con 30 segundos se vida
+app.get('/setEX', (req, res)=>{
+    res.cookie('server2','express', { maxAge: 30000}).send('cookie setEX');
+})
+
+// obtener valor de cookie por el nombre
+app.get('/get', (req, res)=>{
+    res.send(req.cookies.server);
+})
+
+
+// borrar una cookie por el nombre
+app.get('/clr', (req, res)=>{
+    res.clearCookie('server').send('cookie clear');
+})
+
+
+// borrar una cookie por el nombre
+app.get('/cookies', (req, res)=>{
+    res.json({normales : req.cookies, firmadas: req.signedCookies});
+})
+
+// borrar una cookie por el nombre
+app.post('/cookies', (req, res)=>{
+
+    let nombre = req.body.nombre;
+    let valor = req.body.valor;
+    let tiempo = req.body.tiempo;
+
+    console.log(nombre, valor, tiempo);
+
+    if(!nombre || !valor){
+        res.send({error: 'Falta nombre o valor'});
+        return
+    }
+
+    if(!tiempo){
+        res.cookie(nombre,valor, { signed : true}).send(`cookie1 ${nombre} creada`);
+    }else{
+        res.cookie(nombre,valor, { signed: true, maxAge: 1000 * parseInt(tiempo) }).send(`cookie2 ${nombre} creada`);
+    }
+
+    
+})
+
+
+// borrar una cookie por el nombre
+app.delete('/coockie/:name', (req, res)=>{
+    let nombre = req.params.name;
+
+    res.clearCookie(nombre).send('cookie'+nombre+' Eliminada');
 })
