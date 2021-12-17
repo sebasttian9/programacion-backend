@@ -11,8 +11,9 @@ const { mysql:options } = require('./conexion/mysql');
 const { generarProductos } = require('./faker/productos');
 const { normalize, denormalize, schema } = require("normalizr");
 const util = require('util')
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
 
 function print(objeto) {
   console.log(util.inspect(objeto, false, 12, true))
@@ -28,6 +29,7 @@ const contenedorMensajesIns = new Mensajes(optionsLite);
 const contenedorProductos = new Productos(options);
 const contenedorMensajes = new Contenedor('mensajes2.txt');
 
+
 // contenedorMensajesIns.crearTabla().then(()=> console.log('Tabla mensajes creada'));
 // contenedorProductos.crearTabla().then(()=> console.log('Tabla mensajes creada Mysql'));
 
@@ -36,11 +38,13 @@ const contenedorMensajes = new Contenedor('mensajes2.txt');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
-app.use(cookieParser('casaplaya'));
 app.use(session({
+
+    store: new FileStore({path: './sesiones', ttl:60, retries: 0}),
     secret: 'secreto',
-    resave: true,
-    saveUninitialized : true
+    resave: false,
+    saveUninitialized : false,
+    cookie: { maxAge: 60000}
 }));
 
 
@@ -208,4 +212,55 @@ app.delete('/coockie/:name', (req, res)=>{
     let nombre = req.params.name;
 
     res.clearCookie(nombre).send('cookie'+nombre+' Eliminada');
+})
+
+
+
+
+// SESSIONES 
+
+app.get('/root',(req,res)=>{
+
+    let nombre = req.query.nombre;
+
+    if(req.session.contador){
+
+        req.session.contador++;
+
+        if(nombre){
+
+            res.send({mensaje: nombre+' visitado la pagina '+req.session.contador+' veces'});
+        }else{
+            res.send({mensaje: 'Has visitado la pagina '+req.session.contador+' veces'});
+        }
+
+        
+    }else{
+
+        req.session.contador = 1;
+        
+        if(nombre){
+            req.session.nombre = nombre;
+            res.send('Te damos la bienvenida '+nombre);
+        }else{
+            res.send('Te damos la bienvenida');
+        }        
+        
+    }
+
+
+})
+
+
+
+app.get('/olvidar', (req,res)=>{
+
+
+        req.session.destroy(err=>{
+            if(err){
+                res.json({ error: 'olvidar', body: err});
+            }else{
+                res.send('hasta luego');
+            }
+        })
 })
