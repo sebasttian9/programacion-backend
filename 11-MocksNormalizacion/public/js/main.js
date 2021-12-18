@@ -1,4 +1,8 @@
 const socket = io();
+function print(objeto) {
+    console.log(util.inspect(objeto, false, 12, true))
+  }
+  
 
 const formAgregarProductos = document.getElementById('FormsProductos')
 formAgregarProductos.addEventListener('submit', e => {
@@ -96,9 +100,27 @@ btn.addEventListener('click', e => {
 
 
 socket.on('chat', mensajes =>{
+
+    const autorSchema = new normalizr.schema.Entity('autor', {}, { idAttribute: "id" });
+
+    const message = new normalizr.schema.Entity("mensajes", {
+        autor: autorSchema
+    }); //, { idAttribute: () => "" }
+    
+    // Definimos un esquema de mensaje
+    const mensajesSchema = new normalizr.schema.Entity('chat',{
+        mensajes : [message]
+    });
+
+
+        console.log(' ------------- OBJETO DESNORMALIZADO --------------- ')
+        const denormalizedMensaje = normalizr.denormalize(mensajes.result, mensajesSchema, mensajes.entities);
+        // print(denormalizedMensaje)
+        console.log(denormalizedMensaje);
+
     console.log('console log, desde main',mensajes)
-    if(mensajes.length>0){
-        const mensajesHTML = mensajes
+    if(denormalizedMensaje.mensajes.length>0){
+        const mensajesHTML = denormalizedMensaje.mensajes
         .map(msj => `<span class='email'> ${msj.autor.id} </span> <span class='fyh'> [${msj.autor.fecha}] </span>  <span class='msj'>${msj.text}</span> <img src='${msj.autor.avatar}' width='40px'>`)
         .join('<br>')
         document.getElementById('mensajes').innerHTML = mensajesHTML;

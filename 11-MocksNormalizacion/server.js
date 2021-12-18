@@ -24,7 +24,7 @@ const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer); // servidor de socket
 const contenedorMensajesIns = new Mensajes(optionsLite);
 const contenedorProductos = new Productos(options);
-const contenedorMensajes = new Contenedor('mensajes2.txt');
+const contenedorMensajes = new Contenedor('mensajes3.txt');
 
 // contenedorMensajesIns.crearTabla().then(()=> console.log('Tabla mensajes creada'));
 // contenedorProductos.crearTabla().then(()=> console.log('Tabla mensajes creada Mysql'));
@@ -49,22 +49,19 @@ io.on('connection', async socket => {
 
     // Carga inicial de mensajes
     contenedorMensajes.getAll().then((row)=>{
-        console.log(row);
+        // console.log(row);
 
 
         // Inicio proceso de normalizacion
         const mensajes = { id: 'mensajes1', mensajes: row};
+        console.log(mensajes);
         // const mensajes = row;
 
         const autorSchema = new schema.Entity('autor', {}, { idAttribute: "id" });
 
-        const message = new schema.Entity("message", {
+        const message = new schema.Entity("mensajes", {
             autor: autorSchema
-        }, { idAttribute: "_id" });
-
-
-
-
+        }); //, { idAttribute: () => "" }
         // const textSchema = new schema.Entity('text');
         // Definimos un esquema de mensaje
         const mensajesSchema = new schema.Entity('chat',{
@@ -72,16 +69,16 @@ io.on('connection', async socket => {
         });
 
         console.log(' ------------- OBJETO NORMALIZADO --------------- ')
-        const normalizedHolding = normalize(mensajes, mensajesSchema);
-        print(normalizedHolding)
+        const normalizedMensajes = normalize(mensajes, mensajesSchema);
+        print(normalizedMensajes)
 
 
-        console.log(' ------------- OBJETO DESNORMALIZADO --------------- ')
-        const denormalizedHolding = denormalize(normalizedHolding.result, mensajesSchema, normalizedHolding.entities);
-        print(denormalizedHolding)        
+        // console.log(' ------------- OBJETO DESNORMALIZADO --------------- ')
+        // const denormalizedHolding = denormalize(normalizedHolding.result, mensajesSchema, normalizedHolding.entities);
+        // print(denormalizedHolding)        
 
         // mensajes  = row;
-        socket.emit('chat', row);
+        socket.emit('chat', normalizedMensajes);
     })        
 
 
@@ -117,8 +114,29 @@ io.on('connection', async socket => {
 
             contenedorMensajes.getAll().then((row)=>{
                 console.log(row);
+
+        // INICIO de proceso de normalizacion
+        const mensajes = { id: 'mensajes1', mensajes: row};
+        console.log(mensajes);
+        // const mensajes = row;
+
+        const autorSchema = new schema.Entity('autor', {}, { idAttribute: "id" });
+
+        const message = new schema.Entity("mensajes", {
+            autor: autorSchema
+        }); //, { idAttribute: () => "" }
+        // const textSchema = new schema.Entity('text');
+        // Definimos un esquema de mensaje
+        const mensajesSchema = new schema.Entity('chat',{
+            mensajes : [message]
+        });        
+        
+        const normalizedMensajes = normalize(mensajes, mensajesSchema);
+        // print(normalizedMensajes)        
+        /// FIN normalizar mensajes (pasar a funcion externa)
+
                // mensajes  = row;
-               io.sockets.emit('chat', row);
+               io.sockets.emit('chat', normalizedMensajes);
            })
         })
         .catch((e)=>{

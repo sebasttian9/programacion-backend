@@ -1,0 +1,80 @@
+[
+  {
+    "id": "1",
+    "autor": {
+      "id": "svalenzuela.ortiz@gmail.com",
+      "nombre": "sebastian",
+      "apellido": "valenzuela",
+      "edad": "29",
+      "alias": "svalenzuela",
+      "avatar": "avatar1.jpg",
+      "fecha": "15/12/2021 0:09:54"
+    },
+    "text": "Hola"
+  },
+  {
+    "id": "2",
+    "autor": {
+      "id": "svalenzuela.ortiz@gmail.com",
+      "nombre": "seba",
+      "apellido": "valen",
+      "edad": "29",
+      "alias": "sval",
+      "avatar": "avatar.jpg",
+      "fecha": "15/12/2021 1:07:26"
+    },
+    "text": "Alguien por Aca ? "
+  },
+  {
+    "id": "3",
+    "autor": {
+      "id": "palisoto@gmail.com",
+      "nombre": "paula",
+      "apellido": "soto",
+      "edad": "29",
+      "alias": "pali",
+      "avatar": "imagen.jpg",
+      "fecha": "15/12/2021 1:14:03"
+    },
+    "text": "Hola Aca estoy !!"
+  },
+  {
+    "autor": {
+      "id": "svalenzuela.ortiz@gmail.com",
+      "nombre": "sebastian Patricio",
+      "apellido": "valenzuela",
+      "edad": "29",
+      "alias": "sva",
+      "avatar": "https://www.peterbe.com/avatar.png",
+      "fecha": "18/12/2021 2:03:11"
+    },
+    "text": "Prueba con id",
+    "id": "4"
+  },
+  {
+    "autor": {
+      "id": "palisoto@gmail.com",
+      "nombre": "paula",
+      "apellido": "alejadnra",
+      "edad": "29",
+      "alias": "pali",
+      "avatar": "https://www.peterbe.com/avatar.png",
+      "fecha": "18/12/2021 2:16:14"
+    },
+    "text": "prueba 2 insert",
+    "id": "5"
+  },
+  {
+    "autor": {
+      "id": "palisoto@gmail.com",
+      "nombre": "paula",
+      "apellido": "alejadnra",
+      "edad": "29",
+      "alias": "pali",
+      "avatar": "https://www.peterbe.com/avatar.png",
+      "fecha": "18/12/2021 2:18:08"
+    },
+    "text": "prueba parse",
+    "id": 6
+  }
+]

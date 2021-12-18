@@ -25,21 +25,21 @@ class Contenedor {
                         // console.log(typeof(obj));
                         // let productos = data;
                         let mensajes = [];
-                        // let id = 0;
+                        let id = 0;
                         obj.map((p)=>{
                             // console.log(p);
                             mensajes.push(p);
-                            // id = p.id;
+                            id = p.id;
                         });
                         
-                        // objeto.id = id+1;
+                        objeto.id = parseInt(id)+1;
                         mensajes.push(objeto);
-                        // console.log(id);   
+                        console.log(id);   
                         await fs.promises.writeFile(this.nombreArchivo,JSON.stringify(mensajes,null,2));
-                        // console.log('id asignado: '+(id+1));
+                        console.log('id asignado: '+(id+1));
                     }else{
                         // let id = 1;
-                        // objeto.id = 1;
+                        objeto.id = 1;
                         let mensajes = [];
                         mensajes.push(objeto);
                         console.log('no existe el archivo');

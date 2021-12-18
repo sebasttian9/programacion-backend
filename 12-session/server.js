@@ -40,11 +40,11 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
 app.use(session({
 
-    store: new FileStore({path: './sesiones', ttl:60, retries: 0}),
+    store: new FileStore({path: './sesiones', ttl:30, retries: 0}),
     secret: 'secreto',
     resave: false,
     saveUninitialized : false,
-    cookie: { maxAge: 60000}
+    cookie: { maxAge: 30000}
 }));
 
 
@@ -54,9 +54,12 @@ app.use(session({
 
 // 
 
+
+
 // configuro el socket
 
 io.on('connection', async socket => {
+
     console.log('Nuevo cliente conectado!');
 
     // Carga inicial de mensajes
@@ -263,4 +266,33 @@ app.get('/olvidar', (req,res)=>{
                 res.send('hasta luego');
             }
         })
+})
+
+
+app.get('/index', (req,res)=>{
+
+    if(!req.session.nombre_usuario){
+        res.redirect('/login.html');
+    }else{
+        res.redirect('/index.html');
+    }
+})
+
+app.get('/login', (req,res)=>{
+
+    if(!req.session.nombre_usuario){
+        res.redirect('/login.html');
+    }else{
+        res.redirect('/index.html');
+    }
+})
+app.post('/login', (req,res)=>{
+
+    req.session.nombre_usuario = req.body.nombre;
+
+    if(!req.session.nombre_usuario){
+        res.redirect('/login.html');
+    }else{
+        res.redirect('/index.html');
+    }
 })
