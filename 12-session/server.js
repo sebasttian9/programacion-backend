@@ -34,7 +34,8 @@ const contenedorMensajes = new Contenedor('mensajes2.txt');
 // contenedorProductos.crearTabla().then(()=> console.log('Tabla mensajes creada Mysql'));
 
 
-
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
@@ -281,18 +282,19 @@ app.get('/index', (req,res)=>{
 app.get('/login', (req,res)=>{
 
     if(!req.session.nombre_usuario){
-        res.redirect('/login.html');
+        res.render('pages/login');
     }else{
-        res.redirect('/index.html');
+        res.render('pages/index');
     }
 })
+
 app.post('/login', (req,res)=>{
 
     req.session.nombre_usuario = req.body.nombre;
 
     if(!req.session.nombre_usuario){
-        res.redirect('/login.html');
+        res.render('pages/login');
     }else{
-        res.redirect('/index.html');
+        res.render('pages/index', {nombre : req.session.nombre_usuario});
     }
 })

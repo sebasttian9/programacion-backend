@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+​
+<head>
+    <title>Formulario de Login</title>
+    <%- include('../partials/head.ejs') %>
+</head>
+​
+<body>
+    <div class="container mt-3">
+        <div class="jumbotron">
+            <h1>Login de Usuario</h1>
+            <br>
+            <form method="post" action="/login">
+                <div class="form-group">
+                    <label for="nombre">Ingrese su nombre</label>
+                    <input id="nombre" class="form-control" type="text" name="nombre" required>
+                </div>
+                <button class="btn btn-success mt-3">Enviar</button>
+            </form>
+        </div>
+    </div>
+</body>
+​
+</html>
