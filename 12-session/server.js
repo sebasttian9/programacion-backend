@@ -41,11 +41,11 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
 app.use(session({
 
-    store: new FileStore({path: './sesiones', ttl:30, retries: 0}),
+    store: new FileStore({path: './sesiones', ttl:20}),
     secret: 'secreto',
-    resave: false,
+    resave: true,
     saveUninitialized : false,
-    cookie: { maxAge: 30000}
+    cookie: { maxAge: 20000}
 }));
 
 
