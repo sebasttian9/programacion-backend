@@ -11,7 +11,9 @@
     <div class="container mt-3">
         <div class="my-2 p-4 " style="background-color: aquamarine;">
             <h2 class="mb-4">Bienvenido <%= nombre %> </h2>
-            <input type="submit" value="Deslogear" >
+            <form method="post" action="/logout">
+            <input type="submit" class="btn btn-warning" value="Deslogear" >
+          </form>
         </div>
         <div class="jumbotron">
             <h1>Ingrese Producto</h1>

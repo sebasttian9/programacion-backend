@@ -284,7 +284,7 @@ app.get('/login', (req,res)=>{
     if(!req.session.nombre_usuario){
         res.render('pages/login');
     }else{
-        res.render('pages/index');
+        res.render('pages/index', {nombre : req.session.nombre_usuario});
     }
 })
 
@@ -297,4 +297,20 @@ app.post('/login', (req,res)=>{
     }else{
         res.render('pages/index', {nombre : req.session.nombre_usuario});
     }
+})
+
+
+app.post('/logout', (req,res)=>{
+
+    let nombre = req.session.nombre_usuario;
+
+    req.session.destroy(err=>{
+        if(err){
+            res.json({ error: 'olvidar', body: err});
+        }else{
+            res.render('pages/logout', {nombre : nombre});
+        }
+    })
+
+
 })
