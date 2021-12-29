@@ -12,7 +12,8 @@ const { generarProductos } = require('./faker/productos');
 const { normalize, denormalize, schema } = require("normalizr");
 const util = require('util')
 const session = require('express-session');
-const FileStore = require('session-file-store')(session);
+// const FileStore = require('session-file-store')(session);
+const MongoStore = require('connect-mongo');
 
 
 function print(objeto) {
@@ -41,11 +42,14 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
 app.use(session({
 
-    store: new FileStore({path: './sesiones', ttl:20}),
+    // store: new FileStore({path: './sesiones', ttl:60, retries: 0}),
+    store: MongoStore.create({mongoUrl: 'mongodb://localhost/sesiones',ttl: 600 }, ),
     secret: 'secreto',
-    resave: true,
+    resave: false,
     saveUninitialized : false,
-    cookie: { maxAge: 20000}
+    autoRemove: 'interval',
+    autoRemoveInterval: 10 /* In minutes. Default,
+     cookie: { maxAge: 60000}*/
 }));
 
 
@@ -313,4 +317,26 @@ app.post('/logout', (req,res)=>{
     })
 
 
+})
+
+
+
+app.get('/info', (req, res) => {
+    console.log('------------ req.session -------------')
+    console.log(req.session)
+    console.log('--------------------------------------')
+
+    console.log('----------- req.sessionID ------------')
+    console.log(req.sessionID)
+    console.log('--------------------------------------')
+
+    console.log('----------- req.cookies ------------')
+    console.log(req.cookies)
+    console.log('--------------------------------------')
+
+    console.log('---------- req.sessionStore ----------')
+    console.log(req.sessionStore)
+    console.log('--------------------------------------')
+
+    res.send('Send info ok!')
 })
