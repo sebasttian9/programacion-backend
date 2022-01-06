@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Formulario de Ingreso de Productos</title>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+
+    <div class="container mt-3">
+        <div class="my-2 p-4 " style="background-color: aquamarine;">
+            <h2 class="mb-4">Bienvenido <%= nombre %> </h2>
+            <form method="post" action="/logout">
+            <input type="submit" class="btn btn-warning" value="Deslogear" >
+          </form>
+        </div>
+        <div class="jumbotron">
+            <h1>Ingrese Producto</h1>
+            <br>
+
+            <form id="FormsProductos" >
+                <div class="form-group">
+                  <label for="Nombre">Titulo</label>
+                  <input type="text" class="form-control" id="Nombre" aria-describedby="Nombre" name="titulo" >
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+                <div class="form-group">
+                  <label for="Precio">Precio</label>
+                  <input type="text" class="form-control" id="Precio" name="precio">
+                </div>
+                <div class="form-group">
+                    <label for="thum">Url</label>
+                    <input type="text" class="form-control" id="thum"  name="url">
+                  </div>
+                <button type="submit" class="btn btn-success">Enviar</button>
+              </form>
+            <br>
+            <div id="Productos"></div>
+        </div>
+        <div>
+          <div class="jumbotron">
+            <h1>Centro de Mensajes</h1>
+            <div class="mb-3" style="width: 50%;">
+              <input type="text" class="form-control" placeholder="email" name="email" id="email" />
+            </div>
+            <div class="mb-3" style="width: 50%;">
+              <input type="text" class="form-control" placeholder="nombre" name="nombre" id="nombre" />
+            </div>
+            <div class="mb-3" style="width: 50%;">
+              <input type="text" class="form-control" placeholder="apellido" name="apellido" id="apellido" />
+            </div>
+            <div class="mb-3" style="width: 50%;">
+              <input type="text" class="form-control" placeholder="edad" name="edad" id="edad" />
+            </div>     
+            <div class="mb-3" style="width: 50%;">
+              <input type="text" class="form-control" placeholder="alias" name="alias" id="alias" />
+            </div>    
+            <div class="mb-3" style="width: 50%;">
+              <input type="text" class="form-control" placeholder="avatar" name="avatar" id="avatar" />
+            </div>                                                   
+            <div class="mt-3" style="width: 50%;">
+            <input type="text" class="form-control" placeholder="mensaje" name="mensaje" id="txtMensaje">
+              <button type="button"  class="btn btn-secondary mt-3" id="btnEnviarChat">Enviar</button>
+            </div>
+            <div id="mensajes" class="mt-3">
+
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
