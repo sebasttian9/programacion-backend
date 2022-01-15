@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+​
+<head>
+    <title>Formulario de Login</title>
+    <%- include('../partials/head.ejs') %>
+</head>
+​
+<body>
+    <div class="container mt-3">
+        <div class="jumbotron">
+            <h1>Hasta luego <%= nombre %></h1>
+        </div>
+    </div>
+</body>
+
+<script>
+    setTimeout(function () {
+  window.location = "/login"
+}, 2000)
+</script>
+​
+</html>

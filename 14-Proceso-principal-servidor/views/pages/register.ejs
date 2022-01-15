@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+​
+<head>
+    <title>Formulario de Registro</title>
+    <%- include('../partials/head.ejs') %>
+</head>
+​
+<body>
+    <div class="container mt-3">
+        <div class="jumbotron">
+            <h1>Registro de Usuario</h1>
+            <br>
+            <form method="post" action="/register">
+                <div class="form-group">
+                    <label for="nombre">Ingrese su nombre</label>
+                    <input id="username" class="form-control" type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="clave">Ingrese su contraseña</label>
+                    <input id="password" class="form-control" type="password" name="password" required>
+                </div>                
+                <input type="submit" class="btn btn-success mt-3" value="Registrar"/>
+                <hr>
+                <a class="btn btn-success" href="/login" role="button">Ir a login</a>
+            </form>
+        </div>
+    </div>
+</body>
+​
+</html>
