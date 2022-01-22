@@ -2,7 +2,7 @@
 const express = require('express');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
-const fs = require('fs');
+// const fs = require('fs');
 const bcrypt = require('bcrypt');
 const { Mensajes } = require('./contenedorMensajes');
 const { Productos } = require('./contenedorProductos');
@@ -15,13 +15,40 @@ const util = require('util')
 const session = require('express-session');
 // const FileStore = require('session-file-store')(session);
 const MongoStore = require('connect-mongo');
-const ProductosDtoMongo = require('./DTO/mongoDto.js');
+// const ProductosDtoMongo = require('./DTO/mongoDto.js');
 const passport = require('passport');
 // const DtoMongo = new ProductosDtoMongo();
 const LocalStrategy = require('passport-local').Strategy;
 const controllersdb = require('./controllersdb')
 const User = require('./model/usuariosModel');
-const config = require("./config.js");
+const { fork } = require('child_process')
+const path = require('path')
+// const config = require("./config.js");
+
+// DOTENV
+require('dotenv').config();
+
+//MINIMIST
+const parseArgs = require('minimist');
+const options2 = {
+    alias: {
+        m: 'modo',
+        p: 'puerto',
+        d: 'debug'
+    },
+    default: {
+        modo: 'prod',
+        puerto: 8080,
+        debug: false
+    }
+}
+
+const commandLineArgs = process.argv.slice(2);
+
+const { modo, puerto, debug, _ } = parseArgs(commandLineArgs, options2);
+// const args = parseArgs(process.argv.slice(2));
+// console.log(args);
+console.log({ modo, puerto, debug, otros: _ });
 
 
 function isValidPassword(password, BdPass) {
@@ -145,7 +172,7 @@ passport.serializeUser((user, done) => {
 
 io.on('connection', async socket => {
 
-    console.log('Nuevo cliente conectado!');
+    // console.log('Nuevo cliente conectado!');
 
     // Carga inicial de mensajes
     contenedorMensajes.getAll().then((row) => {
@@ -200,17 +227,21 @@ io.on('connection', async socket => {
     })
 });
 
-controllersdb.conectarDB(config.mongodb.cnxStr, err => {
+
+// CONEXION BASE DE DATOS Y SERVIDOR
+
+console.log(process.env.cnxStr);
+controllersdb.conectarDB(process.env.cnxStr, err => {
     if (err) return console.log('error en conexión de base de datos', err)
     console.log('BASE DE DATOS CONECTADA')
 
-    httpServer.listen(8081, () => console.log('SERVER ON'))
+    httpServer.listen(puerto, () => console.log('SERVER ON'))
     httpServer.on('error', (error) => { })
 })
 
 
 
-const default_cant_productos = 5;
+const default_cant_productos = process.env.default_cant_productos;
 app.get('/api/productos-test', (req, res) => {
 
     res.json(generarProductos(default_cant_productos));
@@ -464,27 +495,41 @@ app.post('/logout', (req, res) => {
 
 })
 
-
+// RUTAS ENTREGA 14
 
 app.get('/info', (req, res) => {
-    console.log('------------ req.session -------------')
-    console.log(req.session)
-    console.log('--------------------------------------')
 
-    console.log('----------- req.sessionID ------------')
-    console.log(req.sessionID)
-    console.log('--------------------------------------')
+    const commandLineArgs = process.argv;
 
-    console.log('----------- req.cookies ------------')
-    console.log(req.cookies)
-    console.log('--------------------------------------')
 
-    console.log('---------- req.sessionStore ----------')
-    console.log(req.sessionStore)
-    console.log('--------------------------------------')
-
-    res.send('Send info ok!')
+    res.json({ Argumentos : commandLineArgs,
+                Path_ejecucion:  commandLineArgs[0],
+                node_version : process.versions.node,
+                sistema : process.platform,
+                memoria : process.memoryUsage().rss,
+                process_id: process.pid,
+                carpeta_proyecto: commandLineArgs[1]})
 })
 
+
+app.get('/api/randoms', (req, res) => {
+
+    const commandLineArgs = process.argv;
+    let max = req.query.cant;
+
+    if(!max){max = 50}
+    const computo = fork(path.resolve(__dirname, 'num_random.js'))
+    computo.send(max)
+    computo.on('message', resultado => {
+        res.json({ resultado })
+    })
+
+
+
+    console.log("fin");
+
+    // res.json(numeros);
+
+})
 
 app.use(express.static('./public'));
